@@ -1,3 +1,4 @@
+package day5;
 public class Move {
     public int quantity;
     public int origin;
