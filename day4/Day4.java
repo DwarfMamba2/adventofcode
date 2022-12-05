@@ -9,14 +9,29 @@ import day4.RangePair;
 
 public class Day4 {
     public static ArrayList<RangePair> pairs;
+    public static int containsCount = 0;
 
     public static void main(String[] args) {
-        
+        try {
+            readPairs();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+       
+        for(RangePair pair : pairs){
+            //System.out.println("lower: " + pair.firstRange.lowerBound + " upper: " + pair.firstRange.upperBound + " - lower: " + pair.secondRange.lowerBound + " upper: " + pair.secondRange.upperBound);
+            if(pair.containsAny()){
+                containsCount++;
+            }
+        }
+
+        System.out.println(containsCount);
     }
 
     private static void readPairs() throws IOException{
         pairs = new ArrayList<>();
-        File start = new File("pairs.txt");
+        File start = new File("day4/pairs.txt");
 
         FileReader fr = new FileReader(start);
         BufferedReader br = new BufferedReader(fr);
@@ -26,7 +41,6 @@ public class Day4 {
         System.out.println(
             "Reading text file using FileReader");
         while ((line = br.readLine()) != null) {
-            System.out.println(line);
             pairs.add(getRangePair(line));
         }
         fr.close();
@@ -48,14 +62,11 @@ public class Day4 {
 
             if(!foundFirst){
                 firstRange = new Range(lowerBound, upperBound);
+                foundFirst = true;
             }else{
                 secondRange = new Range(lowerBound, upperBound);
             }
         }
-
         return new RangePair(firstRange, secondRange);
-
-        
-        
     }
 }
